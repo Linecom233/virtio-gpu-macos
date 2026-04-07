@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Bundle Metadata -->
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>virtio-gpu</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.osx-kvm.driver.virtio-gpu</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>VirtIO GPU</string>
+    <key>CFBundlePackageType</key>
+    <string>KEXT</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>0.1.0</string>
+    <key>CFBundleSupportedPlatforms</key>
+    <array>
+        <string>MacOSX</string>
+    </array>
+    <key>OSBundleCompatibleVersion</key>
+    <string>1.0.0</string>
+
+    <!-- IOKit Personality -->
+    <key>IOKitPersonalities</key>
+    <dict>
+        <key>VirtIOGPU</key>
+        <dict>
+            <!-- Class name of the driver -->
+            <key>IOClass</key>
+            <string>virtio_gpu</string>
+            <key>IOClassVersion</key>
+            <integer>1</integer>
+
+            <!-- Provider class (PCI device) -->
+            <key>IOProviderClass</key>
+            <string>IOPCIDevice</string>
+            <key>IOMatchCategory</key>
+            <string>virtio_gpu</string>
+
+            <!-- PCI matching: Vendor=0x1AF4, Device=0x1050 -->
+            <key>IOPCIDeviceMatch</key>
+            <dict>
+                <key>Vendor ID</key>
+                <integer>4660</integer> <!-- 0x1AF4 -->
+                <key>Device ID</key>
+                <integer>4176</integer> <!-- 0x1050 -->
+            </dict>
+
+            <!-- Driver bundle identifier -->
+            <key>CFBundleIdentifier</key>
+            <string>com.osx-kvm.driver.virtio-gpu</string>
+        </dict>
+    </dict>
+
+    <!-- Kernel Extension Dependencies -->
+    <key>OSBundleLibraries</key>
+    <dict>
+        <key>com.apple.kpi.iokit</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.libkern</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.bsm</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.dsep</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.iolib</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.pci</key>
+        <string>19.0</string>
+        <key>com.apple.kpi.仲裁</key>
+        <string>19.0</string>
+    </dict>
+
+    <!-- Required root -->
+    <key>OSBundleRequired</key>
+    <string>Root</string>
+
+    <!-- Update info (optional, remove if not needed) -->
+    <key>OSBundleUpdateLocation</key>
+    <dict>
+        <key>VendorURL</key>
+        <string>https://github.com/kholia/osx-kvm</string>
+    </dict>
+</dict>

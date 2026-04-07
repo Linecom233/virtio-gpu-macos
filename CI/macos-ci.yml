@@ -1,0 +1,62 @@
+name: VirtIO GPU Driver CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'virtio-gpu-macos/**'
+      - '.github/workflows/macos-ci.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'virtio-gpu-macos/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test on macOS
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: false
+
+    - name: Show Xcode version
+      run: xcodebuild -version
+
+    - name: Build Kext
+      run: |
+        cd virtio-gpu-macos
+        make clean
+        make -j$(sysctl -n hw.ncpu)
+        test -d build/virtio-gpu.kext
+        test -f build/virtio-gpu.kext/Contents/MacOS/virtio-gpu
+
+    - name: Validate Info.plist
+      run: |
+        plutil -lint virtio-gpu-macos/build/virtio-gpu.kext/Contents/Info.plist
+
+    - name: Run Unit Tests
+      run: |
+        cd virtio-gpu-macos/Tests
+        make clean
+        make -j$(sysctl -n hw.ncpu)
+        ./virtio-gpu-tests
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: virtio-gpu-kext-${{ github.run_number }}
+        path: |
+          virtio-gpu-macos/build/virtio-gpu.kext
+          virtio-gpu-macos/Tests/virtio-gpu-tests
+
+    - name: Run Lint (shellcheck)
+      if: always()
+      run: |
+        if command -v shellcheck &> /dev/null; then
+          shellcheck virtio-gpu-macos/TestScripts/*.sh || true
+        else
+          echo "shellcheck not installed, skipping"
+        fi

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Allow unsigned executable memory (needed for kernel extensions) -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Disable library validation (allows loading of non-Apple-signed libs if needed) -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- Allow kernel extension loading without full Apple notarization (development only) -->
+    <key>com.apple.kext.allow-unsigned</key>
+    <true/>
+
+    <!-- Enable debugging (optional) -->
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+
+    <!-- For debugging with LLDB -->
+    <key>com.apple.security.get-task-allow</key>
+    <true/>
+</dict>
+</plist>
