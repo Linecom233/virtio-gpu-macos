@@ -536,4 +536,4 @@ MIT License - see LICENSE file in parent repository.
 
 **Last Updated:** 2024-04-07
 **Driver Version:** 0.1.0-alpha
-**Author:** OSX-KVM Contributors
+**Author:** Marlon Hanks
