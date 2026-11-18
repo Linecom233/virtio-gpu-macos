@@ -1,0 +1,21 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: macos-15-intel
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build items
+      run: make
+
+    - name: Run test
+      run: make test
